@@ -13,14 +13,17 @@ st.set_page_config(page_title="JSON URLs Checker", layout="wide")
 
 # Streamlit app
 st.header("JSON URLs Checker")
-st.write("Check the status of URLs (images, attachments, and products) from multiple JSON files.")
-
-# Instructions
 st.markdown("""
-### Instructions
-- **Upload**: One or more JSON files containing URLs.
-- **Process**: The tool checks the status of all URLs (images, attachments, and products).
-- **Download**: Get an Excel file with URL statuses for each JSON file, zipped together.
+📦 This tool checks the status of URLs (images, attachments, and products) from multiple JSON files.
+
+---
+
+### 📝 Instructions
+1. **Upload**: One or more JSON files containing URLs.
+2. **Process**: The tool checks the status of all URLs (images, attachments, and products).
+3. **Download**: Get an Excel file with URL statuses for each JSON file, zipped together.
+
+---
 """)
 
 # Initialize UserAgent safely
@@ -153,7 +156,7 @@ if uploaded_files:
         output_file = os.path.splitext(uploaded_file.name)[0] + "_results.xlsx"
         # Check if this file is already processed
         if output_file in st.session_state['processed_results']:
-            st.write(f"<h4>{uploaded_file.name} already processed</h4>", unsafe_allow_html=True)
+            st.write(f"<h3>{uploaded_file.name} already processed</h3>", unsafe_allow_html=True)
             results.append(output_file)
             continue
 

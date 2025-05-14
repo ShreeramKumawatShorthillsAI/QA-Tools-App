@@ -8,26 +8,31 @@ from datetime import datetime
 # Set page configuration
 st.set_page_config(page_title="JSON Merger", layout="wide")
 
+# Header
 st.header("JSON Merger Tool")
 st.markdown("""
-This tool merges multiple JSON files from compressed archives into a single JSON file.
+📦 This tool merges multiple **JSON files** from compressed archives into a single JSON file.
 
-### Instructions
-- **Upload**: A compressed archive (`.zip`, `.tar`, `.tar.gz`) containing multiple `.json` files.
-- **Process**: The tool combines all valid JSON data into a single list of models.
-- **Download**: Get the merged JSON file.
+---
+
+### 📝 Instructions
+1. **Upload**: A compressed archive (`.zip`, `.tar`, `.tar.gz`) containing multiple `.json` files.
+2. **Process**: The tool combines all valid JSON data into a single list of models.
+3. **Download**: Get the merged JSON file.
+
+---
 """)
 
-# Create a narrower column for the file uploader
+# Create a two-column layout
 col1, col2 = st.columns([1, 1])
 with col1:
     uploaded_file = st.file_uploader("Upload a compressed archive", type=["zip", "tar", "tar.gz"])
 
+# Logic stays unchanged
 if uploaded_file:
-    json_data = []  # Single list to hold all models
+    json_data = []
     invalid_files = []
 
-    # Process the uploaded compressed file
     archive_bytes = uploaded_file.read()
     if uploaded_file.name.endswith(".zip"):
         archive = zipfile.ZipFile(io.BytesIO(archive_bytes))
@@ -36,14 +41,13 @@ if uploaded_file:
             try:
                 with archive.open(file_name) as f:
                     file_content = json.load(io.TextIOWrapper(f, encoding='utf-8'))
-                    # Assuming file_content is a list of models, extend the main list
                     if isinstance(file_content, list):
                         json_data.extend(file_content)
                     else:
-                        json_data.append(file_content)  # Handle case if single object
+                        json_data.append(file_content)
             except json.JSONDecodeError:
                 invalid_files.append(file_name)
-    else:  # .tar or .tar.gz
+    else:
         mode = "r:gz" if uploaded_file.name.endswith(".gz") else "r"
         with tarfile.open(fileobj=io.BytesIO(archive_bytes), mode=mode) as archive:
             for member in archive.getmembers():
@@ -51,30 +55,30 @@ if uploaded_file:
                     try:
                         f = archive.extractfile(member)
                         file_content = json.load(io.TextIOWrapper(f, encoding='utf-8'))
-                        # Assuming file_content is a list of models, extend the main list
                         if isinstance(file_content, list):
                             json_data.extend(file_content)
                         else:
-                            json_data.append(file_content)  # Handle case if single object
+                            json_data.append(file_content)
                     except json.JSONDecodeError:
                         invalid_files.append(member.name)
 
     # Display results
+    st.markdown("---")
     if json_data:
-        st.success(f"Processed {len(json_data)} valid model(s) from the archive.")
+        st.success(f"✅ Processed `{len(json_data)}` valid model(s) from the archive.")
         if invalid_files:
-            st.warning(f"Skipped {len(invalid_files)} invalid file(s): {', '.join(invalid_files)}")
+            st.warning(f"⚠️ Skipped `{len(invalid_files)}` invalid file(s): `{', '.join(invalid_files)}`")
 
         if st.checkbox("Preview merged JSON", help="Check to view the merged JSON data"):
             st.json(json_data)
 
         merged_json_str = json.dumps(json_data, indent=4)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         st.download_button(
-            label="Download Merged JSON",
+            label="⬇️ Download Merged JSON",
             data=merged_json_str,
             file_name=f"merged_json_{timestamp}.json",
             mime="application/json"
         )
     elif invalid_files:
-        st.error("No valid JSON files found in the upload.")
+        st.error("❌ No valid JSON files found in the upload.")
