@@ -11,11 +11,10 @@ st.markdown("""
 ---
 
 ### 🧰 Available Tools
-1. **JSON Merger**: Merge multiple JSON files from a single file or archive into one JSON file.
-2. **JSON Models Remover**: Remove models from JSON files.
-3. **JSON URLs Checker**: Check the status of URLs (images, attachments, and products) from multiple JSON files.
-4. **Data Validator**: *Coming soon...*
-5. **File Convertor**: *Coming soon...*
+1. **JSON Formatter & Validator**: Format and validate JSON models according to standard rules with detailed reporting.
+2. **JSON Merger**: Merge multiple JSON files from a single file or archive into one JSON file.
+3. **JSON Models Remover**: Remove models from JSON files.
+4. **JSON URLs Checker**: Check the status of URLs (images, attachments, and products) from multiple JSON files.
 
 ---
 
