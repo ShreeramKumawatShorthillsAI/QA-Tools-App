@@ -19,6 +19,7 @@ st.markdown("""
 """)
 
 # Upload Section
+st.markdown("### 📤 Upload Files")
 col1, col2 = st.columns([1, 1])
 with col1:
     json_file = st.file_uploader("Upload JSON File", type=["json"])
@@ -71,4 +72,6 @@ if json_file and excel_file:
         st.error(f"❌ Error: {e}")
 
 elif json_file or excel_file:
-    st.info("Please upload both a JSON file and an Excel file to proceed.")
+    st.info("👆 Please upload both a JSON file and an Excel file to proceed.")
+else:
+    st.info("👆 Please upload file(s) to begin processing.")

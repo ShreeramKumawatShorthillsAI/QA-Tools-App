@@ -143,10 +143,15 @@ class ExcelSaver:
         st.session_state['processed_results'][self.output_file] = output
         st.success(f"Results saved to {self.output_file}")
 
-# Create a narrower column for the file uploader
+# Upload Section
+st.markdown("### 📤 Upload Files")
 col1, col2 = st.columns([1, 1])
 with col1:
     uploaded_files = st.file_uploader("Upload JSON files", type=["json"], accept_multiple_files=True)
+
+if not uploaded_files:
+    with col1:
+        st.info("👆 Please upload file(s) to begin processing.")
 
 if uploaded_files:
     url_checker = URLChecker(max_workers=20)

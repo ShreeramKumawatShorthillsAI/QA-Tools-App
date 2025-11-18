@@ -25,12 +25,14 @@ st.markdown("""
 
 # File uploader - supports both JSON files and compressed archives
 st.markdown("### 📤 Upload Files")
-uploaded_files = st.file_uploader(
-    "Choose file(s)",
-    type=["json", "zip", "tar", "gz"],
-    accept_multiple_files=True,
-    help="Upload JSON files or compressed archives (ZIP, TAR, TAR.GZ)"
-)
+col1, col2 = st.columns([1, 1])
+with col1:
+    uploaded_files = st.file_uploader(
+        "Choose file(s)",
+        type=["json", "zip", "tar", "gz"],
+        accept_multiple_files=True,
+        help="Upload JSON files or compressed archives (ZIP, TAR, TAR.GZ)"
+    )
 
 # Categorize uploaded files by type
 json_files = []
@@ -116,10 +118,12 @@ if uploaded_files:
         elif invalid_files:
             st.error("❌ No valid JSON files found in the upload.")
         else:
-            st.info("👆 Please upload file(s) to begin processing.")
+            with col1:
+                st.info("👆 Please upload file(s) to begin processing.")
     
     except Exception as e:
         st.error(f"❌ Error: {str(e)}")
         st.exception(e)
 else:
-    st.info("👆 Please upload file(s) to begin processing.")
+    with col1:
+        st.info("👆 Please upload file(s) to begin processing.")
