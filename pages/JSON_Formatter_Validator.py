@@ -80,6 +80,25 @@ def get_file_ids(files):
     return tuple((f.name, f.size) for f in files)
 
 
+def remove_metadata_keys(data):
+    """
+    Remove specific metadata keys from the model.
+    Keys to remove: _id, updated_at, created_at
+    """
+    keys_to_remove = ["_id", "updated_at", "created_at"]
+    
+    if isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict):
+                for key in keys_to_remove:
+                    item.pop(key, None)
+    elif isinstance(data, dict):
+        for key in keys_to_remove:
+            data.pop(key, None)
+            
+    return data
+
+
 def process_files(uploaded_files):
     """Main file processing function."""
     # Initialize API manager and clients
@@ -187,6 +206,8 @@ def process_files(uploaded_files):
     
     with st.spinner("🔄 Formatting and validating models..."):
         for json_data, file_name in all_json_data:
+            # Remove unwanted keys
+            json_data = remove_metadata_keys(json_data)
             formatted_data = formatter.process_json_data(json_data, file_name)
             all_formatted_data.extend(formatted_data)
     
