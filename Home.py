@@ -18,6 +18,13 @@ st.markdown("""
 
 ---
 
+### 🖥️ UI for QA — DCDE QA Tool
+Use the JSON you format or validate here for **UI testing** in the tool below.
+
+**🔗 [DCDE QA Tool — Open UI](https://dcde-qa-shorthills.vercel.app/)**
+
+---
+
 📬 For support or feedback, contact **shreeram@shorthills.ai**
 """)
 
