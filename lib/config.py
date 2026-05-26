@@ -69,9 +69,9 @@ class Config:
     # API Configuration - dynamically loaded based on environment
     GEMINI_API_KEYS: List[str] = get_api_keys()
     
-    GEMINI_MODEL: str = "gemini-2.5-flash-lite"
-    MAX_CALLS_PER_API_KEY: int = 15
-    BATCH_SIZE: int = 30
+    GEMINI_MODEL: str = "gemini-3.1-flash-lite"
+    MAX_CALLS_PER_API_KEY: int = 400
+    BATCH_SIZE: int = 40
     
     # Validation Rules
     VALID_COUNTRIES: List[str] = ["US", "CA"]
